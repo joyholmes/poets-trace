@@ -123,6 +123,8 @@
             // filterMethod (value, row) {
             //   return row.文人.indexOf(value) > -1;
             // },
+
+						//远程筛选功能
             filterRemote: function (value,row) {
               _this.poetStatus = value;
               _this.poetQuery();
