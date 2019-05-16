@@ -140,11 +140,12 @@
             to: _this.time[1],
           })
             .then(response =>{
-              //vuex更新所有作品
+              //vuex更新所有作品数据
               _this.$store.commit('setPoems',response.data)
 							//更新作品可视化
               _this.$refs.traces.updatePoems()
-              //_this.$refs.dataTable.updateTable()
+              //更新作品表
+              _this.$refs.dataTable.updateTable()
             })
 				}
 			},
@@ -155,6 +156,7 @@
           this.$refs.traces.updatePoetTraces()
 				}else{
           this.$refs.traces.updatePoetPoems()
+          this.$refs.dataTable.updatePoemsTable()
 				}
 			},
       format (val) {

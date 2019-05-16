@@ -357,6 +357,8 @@
 		methods: {
       //文人多选框数组变化
 			poetChange(){
+			  //改变文人数组
+        this.$store.commit('changePoets',this.poets)
 				let _this=this
 				// let serverUrl = '/api/'  //本地调试时
 				//let serverUrl = 'http://47.92.251.238:3000/'  //打包部署上线时

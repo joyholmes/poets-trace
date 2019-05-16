@@ -13,6 +13,8 @@ const state={
   poetTraces:[],
   //轨迹表信息
   tracesInfo:[],
+  //文人列表
+  poets:[],
   //所有作品可视化数据
   poemsData:[],
   //分作家作品可视化数据
@@ -94,18 +96,27 @@ const mutations = {
   setPPoems(state,poemsData){
     state.poetsPoems = []
     state.poemsInfo = []
-    poemsData.forEach(function (value) {
+    poemsData.forEach(function (value,index) {
       let poetPoems = []
       value.forEach(function (value) {
         poetPoems.push({
           name: value.地点,
           value: [value.经度,value.纬度,value.count]
         })
-        state.poemsInfo.push(value)
+        state.poemsInfo.push({
+          文人: state.poets[index],
+          地点: value.地点,
+          数量: value.count
+        })
       })
       state.poetsPoems.push(poetPoems)
-      //console.log(state.poetsPoems)
+      //console.log(state.poemsInfo)
     })
+  },
+  //显示数据切换
+  changePoets(state,poets){
+    state.poets = poets
+    console.log(state.poets)
   },
 
   //显示数据切换

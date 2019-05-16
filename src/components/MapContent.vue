@@ -169,7 +169,7 @@
       },
 			updatePoems(){
         let myChart = echarts.init(this.$refs.chart_wrap);
-        console.log(this.$store.state.poemsData)
+        //console.log(this.$store.state.poemsData)
         myChart.setOption({
           backgroundColor: '#404a59',
           geo: {
@@ -216,7 +216,7 @@
         let myChart = echarts.init(this.$refs.chart_wrap);
         myChart.clear()
         let poetsPoems = this.$store.state.poetsPoems
-        console.log(poetsPoems)
+        //console.log(poetsPoems)
         let series = []
         poetsPoems.forEach(function (value) {
           let item =             {
