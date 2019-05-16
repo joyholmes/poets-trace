@@ -113,35 +113,42 @@
 
 		},
 		methods: {
+      //底端时间线变化
       timeChange(){
         let _this=this
         // let serverUrl = '/api/'  //本地调试时
         //let serverUrl = 'http://47.92.251.238:3000/'  //打包部署上线时
         let serverUrl = 'http://localhost:3000/'  //编译环境
 				if (this.$store.state.mode == '轨迹'){
+				  //查找所有轨迹
           this.$axios.post(serverUrl+"searchTraces",{
             from: _this.time[0],
             to: _this.time[1],
           })
             .then(response =>{
-              //console.log(response.data)
+              //vuex更新所有轨迹
               _this.$store.commit('setTraces',response.data)
+							//更新轨迹线可视化
               _this.$refs.traces.updateTraces()
+							//更新轨迹表
               _this.$refs.dataTable.updateTable()
             })
 				}else{
+				  //查找所有作品分布
           this.$axios.post(serverUrl+"searchPoems",{
             from: _this.time[0],
             to: _this.time[1],
           })
             .then(response =>{
-              //console.log(response.data)
+              //vuex更新所有作品
               _this.$store.commit('setPoems',response.data)
+							//更新作品可视化
               _this.$refs.traces.updatePoems()
               //_this.$refs.dataTable.updateTable()
             })
 				}
 			},
+			//被父组件Home的updateDataH函数调用，作家多选变化
       updateDateL(){
 				if(this.$store.state.mode == '轨迹'){
           this.$refs.dataTable.updateTable()

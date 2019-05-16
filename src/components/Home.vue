@@ -92,9 +92,9 @@
       'search':Search
 		},
 		methods:{
+	    //被子组件Search里的poetChange函数调用，文人数组发生变化，并调用子组件PoetLayout函数
 	    updateDataH(){
         this.$refs.pLayout.updateDateL()
-				//console.log("H")
 			}
 		}
   }

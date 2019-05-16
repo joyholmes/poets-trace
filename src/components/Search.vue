@@ -355,6 +355,7 @@
       }
     },
 		methods: {
+      //文人多选框数组变化
 			poetChange(){
 				let _this=this
 				// let serverUrl = '/api/'  //本地调试时
