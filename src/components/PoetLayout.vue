@@ -42,6 +42,7 @@
 		border-width: 2px;
 		border-color: #9ba7b5;
 		height: 45%;
+		overflow-scrolling: auto;
 	}
 	.bottom{
 		box-sizing: border-box;
@@ -76,10 +77,8 @@
 			</i-col>
 			<i-col :span="10" class="layout-menu-right">
 				<map-content ref="traces"></map-content>
-				<!--<div class="layout-copy">-->
-					<!--2011-2016 &copy; NSLab-->
-				<!--</div>-->
 				<div class="timeline">
+					<!--修改slider css，去掉margin-top-->
 					<Slider :tip-format="format" v-model="time" :min="580" :max="1324" @on-change="timeChange" range></Slider>
 				</div>
 			</i-col>

@@ -123,11 +123,13 @@
         });
 			},
       updatePoetTraces(){
+        let _this = this
         let myChart = echarts.init(this.$refs.chart_wrap);
         let poetTraces = this.$store.state.poetTraces
 				let series = []
-        poetTraces.forEach(function (value) {
+        poetTraces.forEach(function (value,index) {
 					let item = {
+					  name: _this.$store.state.poets[index],
             type: 'lines',
             zlevel: 2,
             symbolSize: 10,
@@ -146,6 +148,16 @@
         })
         myChart.setOption({
           backgroundColor: '#404a59',
+          legend: {
+            orient: 'vertical',
+            top: 'bottom',
+            left: 'right',
+            data: this.$store.state.poets,
+            textStyle: {
+              color: '#fff'
+            },
+            selectedMode: 'multiple',
+          },
           geo: {
             map: 'china',
             roam: true,
@@ -215,11 +227,12 @@
       updatePoetPoems(){
         let myChart = echarts.init(this.$refs.chart_wrap);
         myChart.clear()
+				let _this = this
         let poetsPoems = this.$store.state.poetsPoems
-        //console.log(poetsPoems)
         let series = []
-        poetsPoems.forEach(function (value) {
-          let item =             {
+        poetsPoems.forEach(function (value,index) {
+          let item = {
+            name: _this.$store.state.poets[index],
             type: 'scatter',
             coordinateSystem: 'geo',
             symbolSize: function (val) {
@@ -241,6 +254,16 @@
         })
         myChart.setOption({
           backgroundColor: '#404a59',
+          legend: {
+            orient: 'vertical',
+            top: 'bottom',
+            left: 'right',
+            data: this.$store.state.poets,
+            textStyle: {
+              color: '#fff'
+            },
+            selectedMode: 'multiple',
+          },
           geo: {
             map: 'china',
             roam: true,
