@@ -126,58 +126,117 @@
         let _this = this
         let myChart = echarts.init(this.$refs.chart_wrap);
         let poetTraces = this.$store.state.poetTraces
-				let series = []
-        poetTraces.forEach(function (value,index) {
-					let item = {
-					  name: _this.$store.state.poets[index],
-            type: 'lines',
-            zlevel: 2,
-            symbolSize: 10,
-            large:true,
-            largeThreshold:10000,
-            lineStyle: {
-              normal: {
-                opacity: 1,
-                width: 1,
-                curveness: 0.2
-              }
-            },
-            data: value
+				if(poetTraces.length == 1){
+				  let data = []
+				  for(let i = 0;i<poetTraces[0].length;i++){
+						setTimeout(()=>{
+              data.push(poetTraces[0][i])
+						  console.log(data)
+              myChart.setOption({
+                backgroundColor: '#404a59',
+                legend: {
+                  orient: 'vertical',
+                  top: 'bottom',
+                  left: 'right',
+                  data: this.$store.state.poets,
+                  textStyle: {
+                    color: '#fff'
+                  },
+                  selectedMode: 'multiple',
+                },
+                geo: {
+                  map: 'china',
+                  roam: true,
+                  label: {
+                    emphasis: {
+                      show: false
+                    }
+                  },
+                  itemStyle: {
+                    normal: {
+                      areaColor: '#999',
+                      borderColor: '#666'
+                    },
+                    emphasis: {
+                      areaColor: '#999'
+                    }
+                  }
+                },
+                series: [
+									{
+                    name: _this.$store.state.poets[0],
+                    type: 'lines',
+                    zlevel: 2,
+                    symbolSize: 10,
+                    large:true,
+                    largeThreshold:10000,
+                    lineStyle: {
+                      normal: {
+                        opacity: 1,
+                        width: 1,
+                        curveness: 0.2
+                      }
+                    },
+                    data: data
+									}
+								]
+              })
+						},i*1000)
 					}
-					series.push(item)
-        })
-        myChart.setOption({
-          backgroundColor: '#404a59',
-          legend: {
-            orient: 'vertical',
-            top: 'bottom',
-            left: 'right',
-            data: this.$store.state.poets,
-            textStyle: {
-              color: '#fff'
-            },
-            selectedMode: 'multiple',
-          },
-          geo: {
-            map: 'china',
-            roam: true,
-            label: {
-              emphasis: {
-                show: false
-              }
-            },
-            itemStyle: {
-              normal: {
-                areaColor: '#999',
-                borderColor: '#666'
+				}else{
+          let series = []
+          poetTraces.forEach(function (value,index) {
+            let item = {
+              name: _this.$store.state.poets[index],
+              type: 'lines',
+              zlevel: 2,
+              symbolSize: 10,
+              large:true,
+              largeThreshold:10000,
+              lineStyle: {
+                normal: {
+                  opacity: 1,
+                  width: 1,
+                  curveness: 0.2
+                }
               },
-              emphasis: {
-                areaColor: '#999'
-              }
+              data: value
             }
-          },
-          series: series
-        });
+            series.push(item)
+          })
+          myChart.setOption({
+            backgroundColor: '#404a59',
+            legend: {
+              orient: 'vertical',
+              top: 'bottom',
+              left: 'right',
+              data: this.$store.state.poets,
+              textStyle: {
+                color: '#fff'
+              },
+              selectedMode: 'multiple',
+            },
+            geo: {
+              map: 'china',
+              roam: true,
+              label: {
+                emphasis: {
+                  show: false
+                }
+              },
+              itemStyle: {
+                normal: {
+                  areaColor: '#999',
+                  borderColor: '#666'
+                },
+                emphasis: {
+                  areaColor: '#999'
+                }
+              }
+            },
+            series: series
+          });
+				}
       },
 			updatePoems(){
         let myChart = echarts.init(this.$refs.chart_wrap);
