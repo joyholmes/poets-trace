@@ -33,6 +33,11 @@
         geo: {
           map: 'china',
           roam: true,
+          label: {
+            emphasis: {
+              show: false
+            }
+          },
           itemStyle: {
             normal: {
               areaColor: '#999',
@@ -66,6 +71,7 @@
 		methods: {
       updateTraces(){
         let myChart = echarts.init(this.$refs.chart_wrap);
+        myChart.clear()
         myChart.setOption({
           backgroundColor: '#404a59',
           geo: {
@@ -125,64 +131,166 @@
       updatePoetTraces(){
         let _this = this
         let myChart = echarts.init(this.$refs.chart_wrap);
+        myChart.clear()
         let poetTraces = this.$store.state.poetTraces
+				let preLength = poetTraces.length
 				if(poetTraces.length == 1){
 				  let data = []
-				  for(let i = 0;i<poetTraces[0].length;i++){
-						setTimeout(()=>{
-              data.push(poetTraces[0][i])
-						  console.log(data)
-              myChart.setOption({
-                backgroundColor: '#404a59',
-                legend: {
-                  orient: 'vertical',
-                  top: 'bottom',
-                  left: 'right',
-                  data: this.$store.state.poets,
-                  textStyle: {
-                    color: '#fff'
-                  },
-                  selectedMode: 'multiple',
-                },
-                geo: {
-                  map: 'china',
-                  roam: true,
-                  label: {
-                    emphasis: {
-                      show: false
-                    }
-                  },
-                  itemStyle: {
-                    normal: {
-                      areaColor: '#999',
-                      borderColor: '#666'
-                    },
-                    emphasis: {
-                      areaColor: '#999'
-                    }
-                  }
-                },
-                series: [
-									{
-                    name: _this.$store.state.poets[0],
-                    type: 'lines',
-                    zlevel: 2,
-                    symbolSize: 10,
-                    large:true,
-                    largeThreshold:10000,
-                    lineStyle: {
-                      normal: {
-                        opacity: 1,
-                        width: 1,
-                        curveness: 0.2
-                      }
-                    },
-                    data: data
+          var timesRun = 0;
+          console.log(poetTraces[0].length)
+					var timer  = setInterval(()=>{
+            if(timesRun == poetTraces[0].length - 1 || preLength != _this.$store.state.poetTraces.length){
+              clearInterval(timer);
+            }
+            //do whatever here..
+						console.log(timesRun)
+            data.push(poetTraces[0][timesRun])
+            timesRun += 1
+						console.log(data)
+						myChart.setOption({
+							backgroundColor: '#404a59',
+							legend: {
+								orient: 'vertical',
+								top: 'bottom',
+								left: 'right',
+								data: _this.$store.state.poets,
+								textStyle: {
+									color: '#fff'
+								},
+								selectedMode: 'multiple',
+							},
+							geo: {
+								map: 'china',
+								roam: true,
+								label: {
+									emphasis: {
+										show: false
 									}
-								]
-              })
-						},i*1000)
-					}
+								},
+								itemStyle: {
+									normal: {
+										areaColor: '#999',
+										borderColor: '#666'
+									},
+									emphasis: {
+										areaColor: '#999'
+									}
+								}
+							},
+							series: [
+								{
+									name: _this.$store.state.poets[0],
+									type: 'lines',
+									zlevel: 2,
+									symbolSize: 10,
+									large:true,
+									largeThreshold:10000,
+									lineStyle: {
+										normal: {
+											opacity: 1,
+											width: 1,
+											curveness: 0.2
+										}
+									},
+									data: data
+								},
+								{
+									type: 'scatter',
+									coordinateSystem: 'geo',
+									data: _this.$store.state.poemsPoints,
+									symbolSize: 5,
+									label: {
+										normal: {
+											formatter: '{b}',
+											position: 'right',
+											show: true
+										},
+									},
+									itemStyle: {
+										normal: {
+                      color: '#696969',
+										}
+									}
+								},
+							]
+						})
+
+          },500)
+				  // for(let i = 0;i<poetTraces[0].length;i++){
+          //   // let promise = new Promise(function(resolve, reject) {
+					// 	// })
+          //   setTimeout(()=>{
+          //     data.push(poetTraces[0][i])
+          //     //console.log(data)
+          //     myChart.setOption({
+          //       backgroundColor: '#404a59',
+          //       legend: {
+          //         orient: 'vertical',
+          //         top: 'bottom',
+          //         left: 'right',
+          //         data: _this.$store.state.poets,
+          //         textStyle: {
+          //           color: '#fff'
+          //         },
+          //         selectedMode: 'multiple',
+          //       },
+          //       geo: {
+          //         map: 'china',
+          //         roam: true,
+          //         label: {
+          //           emphasis: {
+          //             show: false
+          //           }
+          //         },
+          //         itemStyle: {
+          //           normal: {
+          //             areaColor: '#999',
+          //             borderColor: '#666'
+          //           },
+          //           emphasis: {
+          //             areaColor: '#999'
+          //           }
+          //         }
+          //       },
+          //       series: [
+          //         {
+          //           name: _this.$store.state.poets[0],
+          //           type: 'lines',
+          //           zlevel: 2,
+          //           symbolSize: 10,
+          //           large:true,
+          //           largeThreshold:10000,
+          //           lineStyle: {
+          //             normal: {
+          //               opacity: 1,
+          //               width: 1,
+          //               curveness: 0.2
+          //             }
+          //           },
+          //           data: data
+          //         },
+          //         {
+          //           type: 'scatter',
+          //           coordinateSystem: 'geo',
+          //           data: _this.$store.state.poemsPoints,
+          //           symbolSize: 5,
+          //           label: {
+          //             normal: {
+          //               formatter: '{b}',
+          //               position: 'right',
+          //               show: true
+          //             },
+          //           },
+          //           itemStyle: {
+          //             normal: {
+					//
+          //             }
+          //           }
+          //         },
+          //       ]
+          //     })
+          //   },i*500)
+					// }
 				}else{
           let series = []
           poetTraces.forEach(function (value,index) {
@@ -203,6 +311,24 @@
               data: value
             }
             series.push(item)
+          })
+					series.push({
+            type: 'scatter',
+            coordinateSystem: 'geo',
+            data: _this.$store.state.poemsPoints,
+            symbolSize: 5,
+            label: {
+              normal: {
+                formatter: '{b}',
+                position: 'right',
+                show: true
+              },
+            },
+            itemStyle: {
+              normal: {
+                color: '#696969',
+              }
+            }
           })
           myChart.setOption({
             backgroundColor: '#404a59',
@@ -240,6 +366,7 @@
       },
 			updatePoems(){
         let myChart = echarts.init(this.$refs.chart_wrap);
+        myChart.clear()
         //console.log(this.$store.state.poemsData)
         myChart.setOption({
           backgroundColor: '#404a59',

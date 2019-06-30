@@ -150,13 +150,15 @@
 			},
 			//被父组件Home的updateDataH函数调用，作家多选变化
       updateDateL(){
-				if(this.$store.state.mode == '轨迹'){
-          this.$refs.dataTable.updateTable()
-          this.$refs.traces.updatePoetTraces()
-				}else{
-          this.$refs.traces.updatePoetPoems()
-          this.$refs.dataTable.updatePoemsTable()
-				}
+        setTimeout(()=>{
+          if(this.$store.state.mode == '轨迹'){
+            this.$refs.dataTable.updateTable()
+            this.$refs.traces.updatePoetTraces()
+          }else{
+            this.$refs.traces.updatePoetPoems()
+            this.$refs.dataTable.updatePoemsTable()
+          }
+				},1100)
 			},
       format (val) {
         return '公元' + val + '年';

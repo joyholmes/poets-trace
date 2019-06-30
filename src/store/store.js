@@ -22,7 +22,9 @@ const state={
   //作品表信息
   poemsInfo:[],
   //轨迹与作品模式切换
-  mode:'轨迹'
+  mode:'轨迹',
+  //文人轨迹坐标点
+  poemsPoints:[]
 
 }
 
@@ -60,6 +62,7 @@ const mutations = {
   setPTraces (state,tracesData){
     state.poetTraces = []
     state.tracesInfo = []
+    state.poemsPoints = []
     tracesData.forEach(function (poet) {
       let poetTrace = []
       poet.forEach(function (value) {
@@ -75,9 +78,25 @@ const mutations = {
           目的地市县
         }
         state.tracesInfo.push(traceInfo)
+        let poemsPoint = {
+          name:起始点,
+          value:[startx, starty]
+        }
+        if(state.poemsPoints.length == 0){
+          state.poemsPoints.push(poemsPoint)
+        }
+        for(var i = 0; i<state.poemsPoints.length; i++){
+          if (poemsPoint.name == state.poemsPoints[i].name){
+            break
+          }
+          if (i == state.poemsPoints.length-1){
+            state.poemsPoints.push(poemsPoint)
+          }
+        }
       })
       state.poetTraces.push(poetTrace)
     })
+    console.log(state.poemsPoints)
   },
 
   //所有作品可视化数据存入
